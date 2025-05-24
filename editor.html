@@ -1,0 +1,71 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Editor</title>
+  <link rel="stylesheet" href="editor.css">
+</head>
+<body>
+  <div class="container">
+    <div class="left">
+      <div class="top">
+       <label>HTML</label>
+       <textarea id="htmlInput" ></textarea>
+      </div>
+      <div class="middle">
+        <Label>CSS</Label>
+        <textarea id="cssInput"></textarea>
+      </div>
+      <div class="bottom">
+        <Label>JS</Label>
+    <textarea id="jsInput"></textarea></div>
+    </div>
+    <div class="right">
+      <label >Output</label>
+      <iframe id="output"></iframe>
+    </div>
+  </div>
+</body>
+<script>
+
+const htmlInput = document.getElementById('htmlInput');
+    const cssInput = document.getElementById('cssInput');
+    const jsInput = document.getElementById('jsInput');
+    const output = document.getElementById('output');
+
+   
+    function updateOutput() {
+      const htmlCode = htmlInput.value || '';  
+      const cssCode = cssInput.value || '';    
+      const jsCode = jsInput.value || '';      
+     
+      const iframeDoc = output.contentDocument || output.contentWindow.document;
+
+     
+      iframeDoc.open();
+      iframeDoc.write(`
+        <html>
+          <head>
+            <style>${cssCode}</style>
+          </head>
+          <body>
+            ${htmlCode}
+          
+            <script>${jsCode}<\/script>  
+          </body>
+        </html>
+      `);
+      iframeDoc.close();
+    }
+
+    
+    htmlInput.addEventListener("keyup", updateOutput);
+    cssInput.addEventListener("keyup", updateOutput);
+    jsInput.addEventListener("keyup", updateOutput);
+
+   
+    updateOutput();
+</script>
+</html>
